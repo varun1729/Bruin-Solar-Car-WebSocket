@@ -1,16 +1,22 @@
 {
-  "name": "Bruin-Solar-Car-WebSocket",
-  "version": "0.0",
+  "name": "bsc-webscoket",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [
-    "sock"
-  ],
-  "author": "Varun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varun1729/Bruin-Solar-Car-WebSocket.git"
+  },
+  "author": "Varun Narayanan",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/varun1729/Bruin-Solar-Car-WebSocket/issues"
+  },
+  "homepage": "https://github.com/varun1729/Bruin-Solar-Car-WebSocket#readme",
   "dependencies": {
     "express": "^4.16.3",
     "nodemon": "^1.17.3",
