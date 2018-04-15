@@ -4,14 +4,21 @@ app = express();
 http = require('http');
 server = http.Server(app);
 io = require('socket.io')(server);
+mongoose = require('mongoose');
+fs = require('fs');
 
 //constants
 port = 8000;
 
+if(!fs.existsSync("log.txt")){
+    fs.closeSync(fs.openSync("log.txt", 'w'));
+}
+let stream = fs.createWriteStream("log.txt", {flags:'a'});
 
 app.get("/", (req,res)=>{
     res.sendFile(__dirname + "/index.html");
 });
+
 
 io.on('connection', (socket) => {
     const emitToGraph = (data) => {
@@ -29,6 +36,7 @@ io.on('connection', (socket) => {
 
     socket.on('dataFromPi', (data) => {
         emitToGraph(data);
+        stream.write(`${new Date().toISOString()} ${data} \n`);
     });
 });
 

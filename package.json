@@ -21,6 +21,7 @@
     "epoch-charting": "^0.8.4",
     "express": "^4.16.3",
     "gulp": "^3.9.1",
+    "mongoose": "^5.0.14",
     "nodemon": "^1.17.3",
     "npm": "^5.8.0",
     "socket.io": "^2.1.0",
