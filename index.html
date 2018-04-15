@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <h2> <center> Realtime Data Visualization </h2>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/epoch-charting@0.8.4/dist/js/epoch.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/epoch-charting@0.8.4/dist/css/epoch.min.css"> Line Chart
+    <div id="myChart" class="epoch category10" style="width: 480px; height: 360px"></div>
+    Gauge
+    <div id="gaugeChart" class="epoch gauge-large"></div>
+    <script>
+    var myData = [{
+        label: 'Time vs. Random Values',
+        values: []
+    }];
+
+    var myChart = $('#myChart').epoch({
+        type: 'time.line',
+        data: myData,
+        axes: ['left', 'bottom'],
+        range: [0, 10],
+        tickFormats: { time: function(d) { return new Date(time*1000).toString(); } }
+    });
+
+    var myGauge = $('#gaugeChart').epoch({
+        type: 'time.gauge',
+        value: 10,
+        ticks: 10,
+        format: (v) => { return (v / 10 * 100).toFixed(2) + '%'; },
+        tickSize: 10,
+        tickOffset: 10,
+        domain: [0, 10]
+    });
+    </script>
+    <script>
+    $(function() {
+        var socket = io();
+        socket.on('dataToGraph', function(data) {
+            myChart.push([{time: ((new Date()).getMinutes()) + 60*60*5, y: Number(data) }]);
+            myGauge.push(Number(data));
+        });
+
+    });
+    </script>
+</body>
+
+</html>

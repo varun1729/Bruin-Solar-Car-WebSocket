@@ -13,8 +13,11 @@ socket.on('connect', () => {
 socket.on('new_connection', (msg) => {
     console.log(msg.message + " at " + msg.time);
     socket.emit('initialMsg', 'RasberryPi_1', 'Connecting from RasberryPi!');
-
     rl.on('line',  (line) => {
-		socket.emit('data',line);
+		socket.emit('dataFromPi',line);
 	});
 });
+
+setInterval(()=>{
+	socket.emit('dataFromPi', Math.random()*2 + 6);
+},1000);
