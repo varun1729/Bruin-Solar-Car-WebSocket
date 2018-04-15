@@ -15,6 +15,7 @@
     Gauge
     <div id="gaugeChart" class="epoch gauge-large"></div>
     <script>
+
     var myData = [{
         label: 'Time vs. Random Values',
         values: []
@@ -25,7 +26,6 @@
         data: myData,
         axes: ['left', 'bottom'],
         range: [0, 10],
-        tickFormats: { time: function(d) { return new Date(time*1000).toString(); } }
     });
 
     var myGauge = $('#gaugeChart').epoch({
@@ -37,15 +37,13 @@
         tickOffset: 10,
         domain: [0, 10]
     });
-    </script>
-    <script>
+    
     $(function() {
         var socket = io();
         socket.on('dataToGraph', function(data) {
-            myChart.push([{time: ((new Date()).getMinutes()) + 60*60*5, y: Number(data) }]);
+            myChart.push([{time: (new Date).getMinutes(), y: Number(data) }]);
             myGauge.push(Number(data));
         });
-
     });
     </script>
 </body>
