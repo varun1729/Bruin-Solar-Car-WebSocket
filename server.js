@@ -1,6 +1,5 @@
 //imports
 const express = require('express');
-let t =0;
 app = express();
 http = require("http");
 server = http.Server(app);
@@ -10,11 +9,15 @@ fs = require('fs');
 
 //constants
 port = 8000;
+file = "log.dat";
 
-if(!fs.existsSync("log.txt")){
-    fs.closeSync(fs.openSync("log.txt", 'w'));
+//time variable
+let t = 0;
+
+if(!fs.existsSync(file)){
+    fs.closeSync(fs.openSync(file, 'w'));
 }
-let stream = fs.createWriteStream("log.dat", {flags:'a'});
+let stream = fs.createWriteStream(file, {flags:'a'});
 
 app.get("/", (req,res)=>{
     res.sendFile(__dirname + "/index.html");
