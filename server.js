@@ -1,7 +1,8 @@
 //imports
 const express = require('express');
+let t =0;
 app = express();
-http = require('http');
+http = require("http");
 server = http.Server(app);
 io = require('socket.io')(server);
 mongoose = require('mongoose');
@@ -13,7 +14,7 @@ port = 8000;
 if(!fs.existsSync("log.txt")){
     fs.closeSync(fs.openSync("log.txt", 'w'));
 }
-let stream = fs.createWriteStream("log.txt", {flags:'a'});
+let stream = fs.createWriteStream("log.dat", {flags:'a'});
 
 app.get("/", (req,res)=>{
     res.sendFile(__dirname + "/index.html");
@@ -36,7 +37,9 @@ io.on('connection', (socket) => {
 
     socket.on('dataFromPi', (data) => {
         emitToGraph(data);
-        stream.write(`${new Date().toISOString()} ${data} \n`);
+        //new Date().getTime() / 1000
+        stream.write(`${t}, ${data} \n`);
+        t++;
     });
 });
 

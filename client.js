@@ -1,9 +1,9 @@
 const io = require('socket.io-client');
-	socket = io.connect('http://localhost:8000', { reconnect: true });
-	readline = require('readline');
+	const socket = io.connect('http://localhost:8000', { reconnect: true });
+	const readline = require('readline');
 
-	rl = readline.createInterface({
-	    input: process.stdin,
+	const rl = readline.createInterface({
+	    input: process.stdin
 	});
 
 socket.on('connect', () => {
@@ -12,12 +12,12 @@ socket.on('connect', () => {
 
 socket.on('new_connection', (msg) => {
     console.log(msg.message + " at " + msg.time);
-    socket.emit('initialMsg', 'RasberryPi_1', 'Connecting from RasberryPi!');
-    rl.on('line',  (line) => {
-		socket.emit('dataFromPi',line);
-	});
+socket.emit('initialMsg', 'RasberryPi_1', 'Connecting from RasberryPi!');
+rl.on('line',  (line) => {
+    socket.emit('dataFromPi',line);
+});
 });
 
 setInterval(()=>{
-	socket.emit('dataFromPi', Math.random()*2 + 6);
+    socket.emit('dataFromPi', Math.random()*2 + 6);
 },1000);
